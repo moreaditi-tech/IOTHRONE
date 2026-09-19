@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Globe, Share2, ExternalLink } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const footerLinks = [
@@ -40,14 +40,14 @@ export const Footer: React.FC = () => {
               POWERING THE NEXT GENERATION OF INNOVATORS.
             </p>
             <p className="text-slate-400 text-sm max-w-md leading-relaxed">
-              The national IoT innovation hackathon and hardware connectivity challenge. Build real-time embedded systems, sensor arrays, and AI edge intelligence.
+              The IoT innovation hackathon and hardware connectivity challenge. Build real-time embedded systems, sensor arrays, and AI edge intelligence.
             </p>
           </div>
 
           {/* Quick Nav Links */}
           <div className="lg:col-span-4 space-y-3">
             <h4 className="font-mono text-xs text-purple-300 tracking-widest uppercase">
-              // QUICK LINKS
+              QUICK LINKS
             </h4>
             <div className="grid grid-cols-2 gap-2 text-sm">
               {footerLinks.map((link) => (
@@ -63,42 +63,53 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Contact Placeholder Section (Rule 7 Requirement) */}
-          <div className="lg:col-span-3 space-y-3">
+          {/* Official Contact Section */}
+          <div className="lg:col-span-3 space-y-4">
             <h4 className="font-mono text-xs text-purple-300 tracking-widest uppercase">
-              // OFFICIAL CONTACT
+              CONTACT
             </h4>
-            <div className="p-3.5 rounded-xl bg-purple-950/40 border border-purple-500/20 text-xs font-mono space-y-2">
-              <div className="flex items-center gap-2 text-purple-300">
-                <Mail className="w-4 h-4 text-purple-400" />
-                <span>[ADD OFFICIAL CONTACT]</span>
+            
+            <div className="space-y-4">
+              {/* President */}
+              <div className="space-y-1">
+                <span className="block font-mono text-xs font-semibold tracking-wider text-purple-300/90 uppercase">
+                  PRESIDENT
+                </span>
+                <p className="font-heading font-bold text-base text-white tracking-wide">
+                  Pratik Lanjewar
+                </p>
+                <a
+                  href="mailto:pratiklanjewar22@gmail.com"
+                  className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-purple-300 transition-colors font-mono"
+                >
+                  <Mail className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                  <span>pratiklanjewar22@gmail.com</span>
+                </a>
               </div>
-              <p className="text-slate-400 text-[11px]">
-                Organizing Secretariat & Technical Helpdesk
-              </p>
+
+              {/* Vice President */}
+              <div className="space-y-1 pt-1">
+                <span className="block font-mono text-xs font-semibold tracking-wider text-purple-300/90 uppercase">
+                  VICE PRESIDENT
+                </span>
+                <p className="font-heading font-bold text-base text-white tracking-wide">
+                  Tejas Bankar
+                </p>
+                <a
+                  href="mailto:tejasbankar58@gmail.com"
+                  className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-purple-300 transition-colors font-mono"
+                >
+                  <Mail className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                  <span>tejasbankar58@gmail.com</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Social Icons & Bottom Row */}
-        <div className="pt-8 border-t border-purple-950/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
-          <div className="flex items-center gap-4">
-            <a href="#contact" aria-label="Portal Link" className="p-2 rounded-lg bg-purple-950/40 hover:text-purple-300 transition-colors flex items-center gap-1.5 text-xs">
-              <Globe className="w-4 h-4 text-purple-400" />
-              <span>IOTHRONE PORTAL</span>
-            </a>
-            <a href="#contact" aria-label="Share Event" className="p-2 rounded-lg bg-purple-950/40 hover:text-purple-300 transition-colors flex items-center gap-1.5 text-xs">
-              <Share2 className="w-4 h-4 text-purple-400" />
-              <span>SHARE</span>
-            </a>
-            <a href="#contact" aria-label="External Link" className="p-2 rounded-lg bg-purple-950/40 hover:text-purple-300 transition-colors flex items-center gap-1.5 text-xs">
-              <ExternalLink className="w-4 h-4 text-purple-400" />
-            </a>
-          </div>
-
-          <div className="text-center sm:text-right">
-            <span>© 2026 IOTHRONE. All rights reserved.</span>
-          </div>
+        {/* Bottom Row */}
+        <div className="pt-8 border-t border-purple-950/80 flex items-center justify-center text-xs font-mono text-slate-400 text-center">
+          <span>© 2026 IOTHRONE. All rights reserved.</span>
         </div>
       </div>
     </footer>

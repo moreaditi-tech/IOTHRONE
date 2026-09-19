@@ -30,7 +30,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRegister }) => {
             <Sparkles className="w-3.5 h-3.5 text-purple-300 animate-pulse" />
             <span>IOTHRONE 2026</span>
             <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-            <span className="text-purple-400">NATIONAL IOT COMPETITION</span>
+            <span className="text-purple-400">IOT COMPETITION</span>
           </div>
 
           {/* Main Title */}
@@ -93,7 +93,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRegister }) => {
             </div>
             <div>
               <span className="block font-heading font-bold text-2xl text-white">2026</span>
-              <span className="block font-mono text-[10px] text-purple-300/70 tracking-wider">NATIONAL EDITION</span>
+              <span className="block font-mono text-[10px] text-purple-300/70 tracking-wider">COLLEGE EDITION</span>
             </div>
           </div>
         </div>
