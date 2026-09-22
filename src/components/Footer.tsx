@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail } from 'lucide-react';
+import { Phone } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const footerLinks = [
@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer id="contact" className="relative bg-[#040108] border-t border-purple-900/40 py-16 px-4 sm:px-6 lg:px-8 text-slate-300">
+    <footer id="contact" className="relative bg-[#040108]/80 backdrop-blur-md border-t border-purple-900/40 py-16 px-4 sm:px-6 lg:px-8 text-slate-300">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Top Footer Row */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -70,37 +70,31 @@ export const Footer: React.FC = () => {
             </h4>
             
             <div className="space-y-4">
-              {/* President */}
+              {/* Pratik Lanjewar */}
               <div className="space-y-1">
-                <span className="block font-mono text-xs font-semibold tracking-wider text-purple-300/90 uppercase">
-                  PRESIDENT
-                </span>
                 <p className="font-heading font-bold text-base text-white tracking-wide">
                   Pratik Lanjewar
                 </p>
                 <a
-                  href="mailto:pratiklanjewar22@gmail.com"
-                  className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-purple-300 transition-colors font-mono"
+                  href="tel:8329926111"
+                  className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-purple-300 transition-colors font-mono font-semibold"
                 >
-                  <Mail className="w-3.5 h-3.5 text-purple-400 shrink-0" />
-                  <span>pratiklanjewar22@gmail.com</span>
+                  <Phone className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                  <span>83299 26111</span>
                 </a>
               </div>
 
-              {/* Vice President */}
+              {/* Tejas Bankar */}
               <div className="space-y-1 pt-1">
-                <span className="block font-mono text-xs font-semibold tracking-wider text-purple-300/90 uppercase">
-                  VICE PRESIDENT
-                </span>
                 <p className="font-heading font-bold text-base text-white tracking-wide">
                   Tejas Bankar
                 </p>
                 <a
-                  href="mailto:tejasbankar58@gmail.com"
-                  className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-purple-300 transition-colors font-mono"
+                  href="tel:850350084"
+                  className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-purple-300 transition-colors font-mono font-semibold"
                 >
-                  <Mail className="w-3.5 h-3.5 text-purple-400 shrink-0" />
-                  <span>tejasbankar58@gmail.com</span>
+                  <Phone className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                  <span>8503 50084</span>
                 </a>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { COMPETITION_TIMELINE } from '../data/competitionData';
-import { Clock, CheckCircle2, Zap } from 'lucide-react';
+import { Clock, MapPin, Users, CheckCircle2, Zap } from 'lucide-react';
 
 export const Timeline: React.FC = () => {
   return (
@@ -48,33 +48,79 @@ export const Timeline: React.FC = () => {
                       </span>
                     </div>
 
-                    {/* Stage Title */}
-                    <h3 className="font-heading font-bold text-xl sm:text-2xl text-white tracking-wide group-hover:text-purple-200 transition-colors">
-                      {item.title}
-                    </h3>
+                    {/* Stage Title & Subtitle */}
+                    <div>
+                      <h3 className="font-heading font-bold text-xl sm:text-2xl text-white tracking-wide group-hover:text-purple-200 transition-colors">
+                        {item.title}
+                      </h3>
+                      {item.subtitle && (
+                        <p className="font-mono text-xs text-purple-300 font-semibold tracking-wider uppercase mt-1">
+                          {item.subtitle}
+                        </p>
+                      )}
+                    </div>
 
-                    {/* Time & Activity Details (if present) */}
-                    {(item.time || item.activity) && (
-                      <div className="space-y-1.5 py-2 px-3.5 rounded-xl bg-purple-950/40 border border-purple-500/20 font-mono text-xs">
+                    {/* Time, Venue & Participants Details (if present) */}
+                    {(item.time || item.venue || item.participants) && (
+                      <div className="space-y-1.5 py-2.5 px-3.5 rounded-xl bg-purple-950/40 border border-purple-500/20 font-mono text-xs">
                         {item.time && (
                           <div className="flex items-center gap-2 text-purple-300">
-                            <Clock className="w-3.5 h-3.5 text-purple-400" />
+                            <Clock className="w-3.5 h-3.5 text-purple-400 shrink-0" />
                             <span>Time: {item.time}</span>
                           </div>
                         )}
-                        {item.activity && (
-                          <div className="flex items-start gap-2 text-slate-300 pt-1">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-purple-400 mt-0.5 shrink-0" />
-                            <span>Activity: {item.activity}</span>
+                        {item.venue && (
+                          <div className="flex items-center gap-2 text-purple-300">
+                            <MapPin className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                            <span>Venue: {item.venue}</span>
+                          </div>
+                        )}
+                        {item.participants && (
+                          <div className="flex items-center gap-2 text-purple-300">
+                            <Users className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                            <span>Participants: {item.participants}</span>
                           </div>
                         )}
                       </div>
                     )}
 
-                    {/* Description */}
-                    <p className="text-slate-300 text-sm leading-relaxed">
-                      {item.description}
-                    </p>
+                    {/* Evaluates / Focus Points */}
+                    {item.evaluatesPoints && item.evaluatesPoints.length > 0 && (
+                      <div className="space-y-2 pt-1">
+                        {item.evaluatesTitle && (
+                          <p className="text-xs font-mono font-semibold text-purple-300 uppercase tracking-wide">
+                            {item.evaluatesTitle}
+                          </p>
+                        )}
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-300">
+                          {item.evaluatesPoints.map((point, i) => (
+                            <li key={i} className="flex items-center gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0" />
+                              <span>{point}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Description (if present) */}
+                    {item.description && (
+                      <p className="text-slate-300 text-sm leading-relaxed">
+                        {item.description}
+                      </p>
+                    )}
+
+                    {/* Notes / Bullet lines */}
+                    {item.notes && item.notes.length > 0 && (
+                      <div className="space-y-1.5 pt-1 text-xs sm:text-sm text-slate-300">
+                        {item.notes.map((note, i) => (
+                          <div key={i} className="flex items-start gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-purple-400 mt-0.5 shrink-0" />
+                            <span>{note}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     {/* Glowing Edge highlight */}
                     <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-500 to-indigo-500 opacity-60 group-hover:opacity-100 transition-opacity" />

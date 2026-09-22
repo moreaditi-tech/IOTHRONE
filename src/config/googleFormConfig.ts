@@ -1,12 +1,12 @@
 /**
  * Centralized Configuration for IOTHRONE Google Form Integration
  *
- * Official Google Form Responder URL: https://forms.gle/VimU86cWRDFk9EDWA
+ * Official Google Form Responder URL: https://forms.gle/AZb8kXxU2MH2wAmx9
  * Verified Google Form ID: 1FAIpQLSfCCTP3C6VirvOnnr0UyZPBamne1JiqUFbRSbVTRMCFQFAYQg
  */
 
 export const GOOGLE_FORM_CONFIG = {
-  FORM_URL: 'https://forms.gle/VimU86cWRDFk9EDWA',
+  FORM_URL: 'https://forms.gle/AZb8kXxU2MH2wAmx9',
   SUBMIT_URL: 'https://docs.google.com/forms/d/e/1FAIpQLSfCCTP3C6VirvOnnr0UyZPBamne1JiqUFbRSbVTRMCFQFAYQg/formResponse',
 
   // Actual verified Google Form Entry IDs for each field

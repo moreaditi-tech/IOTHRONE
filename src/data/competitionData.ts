@@ -1,13 +1,17 @@
 export interface TimelineStage {
   id: string;
   number: string;
+  badge: string;
   title: string;
   subtitle: string;
   date: string;
   time?: string;
-  activity?: string;
-  description: string;
-  badge: string;
+  venue?: string;
+  participants?: string;
+  description?: string;
+  evaluatesTitle?: string;
+  evaluatesPoints?: string[];
+  notes?: string[];
   status: 'upcoming' | 'current' | 'future';
 }
 
@@ -20,42 +24,68 @@ export interface FAQItem {
 export interface RuleCategory {
   id: string;
   title: string;
-  rules: string[];
+  rules: {
+    num: string;
+    title: string;
+    description: string;
+  }[];
 }
 
 export const COMPETITION_TIMELINE: TimelineStage[] = [
   {
-    id: 'registration',
+    id: 'round1',
     number: '01',
-    title: 'REGISTRATION & PPT SUBMISSION',
-    subtitle: 'Submission Phase',
-    date: 'Deadline: 5 October 2026',
-    description: 'Complete registration and submit your presentation before the deadline.',
     badge: 'STAGE 01',
+    title: 'ROUND 1',
+    subtitle: 'ONLINE — PPT EVALUATION',
+    date: 'Online',
+    evaluatesTitle: 'Round 1 evaluates:',
+    evaluatesPoints: [
+      'Problem Statement',
+      'Proposed Solution',
+      'Innovation',
+      'Technology Stack',
+      'System Architecture',
+      'Implementation Plan',
+      'Feasibility & Impact'
+    ],
+    notes: ['The PPT must be submitted along with event registration.'],
     status: 'current'
   },
   {
-    id: 'round1',
+    id: 'round2',
     number: '02',
-    title: 'ROUND 1 — PROTOTYPE PRESENTATION',
-    subtitle: 'Demonstration & Concept Evaluation',
+    badge: 'STAGE 02',
+    title: 'ROUND 2',
+    subtitle: 'OFFLINE — PROTOTYPE DEMONSTRATION',
     date: '9 October 2026',
     time: '9:00 AM – 4:00 PM',
-    activity: 'Prototype presentation and demonstration.',
-    description: 'Present your concept, demonstrate your prototype, and showcase how your system works.',
-    badge: 'STAGE 02',
+    venue: '6206 LAB & 6218 LAB',
+    notes: [
+      'Each team will receive an individual presentation slot.',
+      'Top 15 teams advance to Round 3.'
+    ],
     status: 'upcoming'
   },
   {
-    id: 'round2',
+    id: 'round3',
     number: '03',
-    title: 'ROUND 2 — REAL-TIME MODIFICATION & INTEGRATION',
-    subtitle: 'Live Implementation Challenge',
-    date: '10 October 2026',
-    time: '9:00 AM – 4:00 PM',
-    activity: 'Real-time modification, integration, and implementation of the system.',
-    description: 'Modify and integrate your system in real time according to the challenge requirements.',
     badge: 'STAGE 03',
+    title: 'ROUND 3',
+    subtitle: 'OFFLINE — REAL-TIME IMPLEMENTATION',
+    date: '10 October 2026',
+    time: '10:00 AM – 2:00 PM',
+    venue: '6206 LAB & 6218 LAB',
+    participants: 'Top 15 teams from Round 2',
+    evaluatesTitle: 'Round 3 focuses on:',
+    evaluatesPoints: [
+      'Real-time integration',
+      'Functionality',
+      'Adaptability',
+      'Technical implementation',
+      'Innovation',
+      'Demonstration'
+    ],
     status: 'future'
   }
 ];
@@ -83,68 +113,107 @@ export const ABOUT_CARDS = [
 
 export const CHALLENGE_STAGES = [
   {
-    id: 'ideate',
+    id: 'concept',
     step: '01',
-    title: 'IDEATE',
+    title: 'CONCEPT',
     subtitle: 'Conceptualize the Solution',
-    description: 'Formulate your IoT architectural blueprint, define sensor inputs, and outline system communication protocols.',
+    description: 'Formulate your IoT architectural blueprint, define sensor inputs, and outline system communication protocols for Round 1 PPT evaluation.',
     icon: 'Sparkles'
   },
   {
-    id: 'build',
+    id: 'prototype',
     step: '02',
-    title: 'BUILD',
+    title: 'PROTOTYPE',
     subtitle: 'Hardware & Code Assembly',
-    description: 'Construct the physical prototype, wire microcontrollers, program edge sensors, and establish cloud telemetry.',
+    description: 'Construct the physical prototype, program edge sensors, and demonstrate working hardware capabilities during Round 2 evaluation.',
     icon: 'Wrench'
   },
   {
     id: 'integrate',
     step: '03',
-    title: 'INTEGRATE',
-    subtitle: 'Real-Time System Connectivity',
-    description: 'Unify edge devices, machine learning models, and real-time control streams into one resilient power core.',
+    title: 'REAL-TIME INTEGRATION',
+    subtitle: 'Live System Implementation',
+    description: 'Unify edge devices, real-time control streams, and execute live system modifications during Round 3 implementation.',
     icon: 'Share2'
   }
 ];
 
 export const PROCESS_NODES = [
-  { step: '01', title: 'REGISTER', desc: 'Form your team and register before the submission deadline.' },
+  { step: '01', title: 'REGISTER', desc: 'Form your team, register, and submit your PPT for Round 1 evaluation.' },
   { step: '02', title: 'DESIGN', desc: 'Architect hardware schematics and intelligent connectivity workflows.' },
   { step: '03', title: 'BUILD', desc: 'Assemble physical prototypes, edge modules, and cloud software interfaces.' },
-  { step: '04', title: 'PRESENT', desc: 'Demonstrate prototype capabilities during Round 1 evaluation.' },
-  { step: '05', title: 'INTEGRATE', desc: 'Execute live real-time system modifications under competition conditions.' },
+  { step: '04', title: 'DEMO', desc: 'Demonstrate prototype capabilities during Round 2 offline evaluation.' },
+  { step: '05', title: 'INTEGRATE', desc: 'Execute live real-time system implementation in Round 3 for top 15 teams.' },
   { step: '06', title: 'INNOVATE', desc: 'Pioneer the future of connected IoT systems and claim the core.' }
 ];
 
 export const RULES_DATA: RuleCategory[] = [
   {
     id: 'general',
-    title: '01. ELIGIBILITY & PARTICIPATION',
+    title: '01. ELIGIBILITY & REGISTRATION',
     rules: [
-      '[ADD OFFICIAL ELIGIBILITY DETAILS]',
-      'Teams must consist of eligible student or independent developer participants.',
-      'All team members must be registered before the registration deadline on 5 October 2026.',
-      'Cross-institutional collaboration is subject to official guidelines.'
+      {
+        num: '01',
+        title: 'TEAM SIZE',
+        description: 'Teams must consist of 2–4 members.'
+      },
+      {
+        num: '02',
+        title: 'REGISTRATION',
+        description: 'Teams must complete registration within the given registration timeline.'
+      },
+      {
+        num: '03',
+        title: 'ROUND 1 PPT SUBMISSION',
+        description: 'The PPT must be submitted along with the registration for Round 1 evaluation.'
+      }
     ]
   },
   {
     id: 'prototype',
-    title: '02. PROTOTYPE & HARDWARE RULES',
+    title: '02. HARDWARE & ORIGINALITY',
     rules: [
-      'Prototypes demonstrated in Round 1 (9 October 2026) must incorporate functional IoT hardware, sensors, or microcontroller units.',
-      'Real-time modifications during Round 2 (10 October 2026) must be performed on-site using authorized development gear.',
-      'Safety compliance: High-voltage systems must include standard circuit protection.'
+      {
+        num: '04',
+        title: 'ORIGINALITY',
+        description: 'All projects must be original work. Plagiarism or copied projects may lead to disqualification.'
+      },
+      {
+        num: '05',
+        title: 'HARDWARE & COMPONENTS',
+        description: 'Participants are responsible for bringing the required hardware, components, and equipment for their project.'
+      },
+      {
+        num: '08',
+        title: 'PROTOTYPE SAFETY',
+        description: 'The prototype must be safe to operate and demonstrate.'
+      }
     ]
   },
   {
-    id: 'judging',
-    title: '03. EVALUATION & CONDUCT',
+    id: 'conduct',
+    title: '03. CONDUCT & EVALUATION',
     rules: [
-      '[ADD OFFICIAL EVALUATION CRITERIA]',
-      '[ADD OFFICIAL PRIZES]',
-      'Judges decision regarding prototype scores and live integration challenges will be final.',
-      'Academic integrity and original code work are strictly enforced.'
+      {
+        num: '06',
+        title: 'REPORTING & TIMING',
+        description: 'Teams must report according to their assigned slot and timing.'
+      },
+      {
+        num: '07',
+        title: 'ORGANIZER INSTRUCTIONS',
+        description: 'Participants must follow the instructions provided by the organizing team and judging panel.'
+      },
+      {
+        num: '09',
+        title: 'JUDGING DECISION',
+        description: 'The decision of the judging panel will be final.'
+      },
+      {
+        num: '10',
+        title: 'SCHEDULE / VENUE CHANGES',
+        description: 'Any changes in schedule, venue, or round requirements will be communicated by the organizing team.'
+      }
     ]
   }
 ];
@@ -157,8 +226,8 @@ export const FAQ_DATA: FAQItem[] = [
   },
   {
     id: 'faq-2',
-    question: 'Who can participate?',
-    answer: '[ADD OFFICIAL ELIGIBILITY DETAILS] Participation is open to students, developers, and technology enthusiasts who register prior to 5 October 2026.'
+    question: 'Who can participate & what is the registration fee?',
+    answer: 'Participation is open to students and developers. Registration Fee: PCCOE Students — FREE | Non-PCCOE Students — ₹99 / Team. Teams must consist of 2–4 members.'
   },
   {
     id: 'faq-3',
@@ -168,17 +237,17 @@ export const FAQ_DATA: FAQItem[] = [
   {
     id: 'faq-4',
     question: 'What is required for Round 1?',
-    answer: 'For Round 1 (9 October 2026, 9:00 AM – 4:00 PM), teams must present their working IoT prototype and demonstrate its functionality to the evaluation panel.'
+    answer: 'Round 1 is an Online PPT Evaluation evaluating Problem Statement, Proposed Solution, Innovation, Technology Stack, System Architecture, Implementation Plan, Feasibility & Impact. PPT must be submitted along with registration.'
   },
   {
     id: 'faq-5',
-    question: 'What happens during Round 2?',
-    answer: 'In Round 2 (10 October 2026, 9:00 AM – 4:00 PM), qualified teams undertake a live, real-time modification and integration challenge to adapt their system to new competition parameters.'
+    question: 'What happens during Round 2 and Round 3?',
+    answer: 'Round 2 (9 October 2026, 9:00 AM – 4:00 PM at 6206 LAB & 6218 LAB) is an Offline Prototype Demonstration. The top 15 teams from Round 2 advance to Round 3 (10 October 2026, 10:00 AM – 2:00 PM at 6206 LAB & 6218 LAB) for Real-Time Implementation.'
   },
   {
     id: 'faq-6',
     question: 'What should participants bring?',
-    answer: '[ADD OFFICIAL PARTICIPANT PACK LIST] Participants should bring their hardware prototypes, development laptops, microcontrollers, sensors, debug cables, and power supplies.'
+    answer: 'Participants should bring their hardware prototypes, development laptops, microcontrollers, sensors, debug cables, and power supplies.'
   },
   {
     id: 'faq-7',

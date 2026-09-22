@@ -26,8 +26,8 @@ export const FAQ: React.FC = () => {
               key={item.id}
               className={`rounded-2xl transition-all duration-300 overflow-hidden ${
                 isOpen
-                  ? 'bg-purple-950/70 border-2 border-purple-400 shadow-[0_0_25px_rgba(157,78,221,0.3)]'
-                  : 'glass-panel hover:bg-purple-900/30 border-purple-500/20'
+                  ? 'bg-purple-900/80 border-2 border-purple-400 shadow-[0_0_25px_rgba(199,125,255,0.4)]'
+                  : 'glass-panel glass-panel-hover border-purple-500/20'
               }`}
             >
               <button

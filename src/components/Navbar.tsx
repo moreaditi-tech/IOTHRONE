@@ -65,25 +65,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Logo */}
-          <a
-            href="#home"
-            onClick={(e) => handleNavClick(e, '#home')}
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg p-1"
-          >
-            <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-900 flex items-center justify-center border border-purple-400/40 shadow-[0_0_15px_rgba(157,78,221,0.5)] group-hover:shadow-[0_0_25px_rgba(224,170,255,0.8)] transition-all duration-300">
-              <span className="font-heading font-black text-white text-base tracking-tighter">IO</span>
-              <div className="absolute inset-0 rounded-lg bg-purple-400/20 animate-ping opacity-30" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-heading font-bold text-xl md:text-2xl tracking-widest text-gradient-purple">
-                IOTHRONE
-              </span>
-              <span className="text-[9px] font-mono tracking-widest text-purple-300/70 -mt-1 hidden sm:block">
-                CORE SYSTEM 2026
+          <div className="flex items-center gap-3 sm:gap-4 lg:gap-5">
+            {/* IIRIS Organizer / Club Brand (Left Side) */}
+            <div className="hidden sm:flex items-center pr-3 sm:pr-4 border-r border-purple-500/30 select-none">
+              <span className="font-heading font-black text-xl md:text-2xl tracking-widest text-gradient-purple drop-shadow-[0_0_18px_rgba(199,125,255,0.9)]">
+                IIRIS
               </span>
             </div>
-          </a>
+
+            {/* IOTHRONE Logo */}
+            <a
+              href="#home"
+              onClick={(e) => handleNavClick(e, '#home')}
+              className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg p-1"
+            >
+              <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-900 flex items-center justify-center border border-purple-400/40 shadow-[0_0_15px_rgba(157,78,221,0.5)] group-hover:shadow-[0_0_25px_rgba(224,170,255,0.8)] transition-all duration-300">
+                <span className="font-heading font-black text-white text-base tracking-tighter">IO</span>
+                <div className="absolute inset-0 rounded-lg bg-purple-400/20 animate-ping opacity-30" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-heading font-bold text-xl md:text-2xl tracking-widest text-gradient-purple">
+                  IOTHRONE
+                </span>
+                <span className="text-[9px] font-mono tracking-widest text-purple-300/70 -mt-1 hidden sm:block">
+                  CORE SYSTEM 2026
+                </span>
+              </div>
+            </a>
+          </div>
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2 px-4 py-1.5 rounded-full bg-purple-950/20 border border-purple-500/15 backdrop-blur-md">

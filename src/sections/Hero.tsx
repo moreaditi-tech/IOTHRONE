@@ -98,9 +98,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRegister }) => {
           </div>
         </div>
 
-        {/* Right Column: 3D Power Core Centerpiece */}
+        {/* Right Column: Animated Power Core Video Centerpiece */}
         <div className="lg:col-span-5 flex items-center justify-center relative">
-          <PowerStone3D size="w-72 h-72 sm:w-96 sm:h-96 lg:w-[480px] lg:h-[480px]" />
+          <PowerStone3D size="w-72 h-72 sm:w-96 sm:h-96 lg:w-[480px] lg:h-[480px]" videoSrc="/Images/Home2.mp4" />
         </div>
       </div>
 

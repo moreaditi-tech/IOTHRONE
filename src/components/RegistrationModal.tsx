@@ -12,17 +12,8 @@ interface FormData {
   teamName: string;
   track: string;
   leaderName: string;
-  email: string;
-  leaderPhone: string;
   institution: string;
-  member2: string;
-  member3: string;
-  member4: string;
   projectTitle: string;
-  abstract: string;
-  technologies: string;
-  prototypeStatus: string;
-  projectLink: string;
 }
 
 export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose }) => {
@@ -30,33 +21,13 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
     teamName: '',
     track: 'Smart IoT Systems',
     leaderName: '',
-    email: '',
-    leaderPhone: '',
     institution: '',
-    member2: '',
-    member3: '',
-    member4: '',
-    projectTitle: '',
-    abstract: '',
-    technologies: '',
-    prototypeStatus: 'Idea / Concept',
-    projectLink: ''
+    projectTitle: ''
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [passData, setPassData] = useState<{
-    refId: string;
-    teamName: string;
-    track: string;
-    leaderName: string;
-    institution: string;
-    membersCount: number;
-    projectTitle: string;
-    timestamp: string;
-  } | null>(null);
+  const [passData, setPassData] = useState<FormData | null>(null);
 
   // Close on ESC key press
   useEffect(() => {
@@ -77,116 +48,37 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
     if (!formData.teamName.trim()) newErrors.teamName = 'Team name is required.';
     if (!formData.track.trim()) newErrors.track = 'Competition track is required.';
     if (!formData.leaderName.trim()) newErrors.leaderName = 'Team leader name is required.';
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Leader email is required.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      newErrors.email = 'Please enter a valid email address.';
-    }
-
-    if (!formData.leaderPhone.trim()) {
-      newErrors.leaderPhone = 'Leader contact number is required.';
-    } else if (!/^[6-9]\d{9}$/.test(formData.leaderPhone.trim().replace(/\D/g, ''))) {
-      newErrors.leaderPhone = 'Enter a valid 10-digit mobile number.';
-    }
-
     if (!formData.institution.trim()) newErrors.institution = 'Institution name is required.';
-    if (!formData.member2.trim()) newErrors.member2 = 'Team member 2 is required.';
-    if (!formData.member3.trim()) newErrors.member3 = 'Team member 3 is required.';
     if (!formData.projectTitle.trim()) newErrors.projectTitle = 'Project title is required.';
-    if (!formData.abstract.trim()) newErrors.abstract = 'Project abstract brief is required.';
-    if (!formData.prototypeStatus.trim()) newErrors.prototypeStatus = 'Prototype status is required.';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
-    setIsSubmitting(true);
-    setSubmissionError(null);
+    setPassData({
+      teamName: formData.teamName.trim(),
+      track: formData.track.trim(),
+      leaderName: formData.leaderName.trim(),
+      institution: formData.institution.trim(),
+      projectTitle: formData.projectTitle.trim(),
+    });
 
-    const entryIds = GOOGLE_FORM_CONFIG.ENTRY_IDS;
+    setIsSubmitted(true);
 
-    // Prepare Google Form submission payload
-    const formParams = new URLSearchParams();
-    formParams.append(entryIds.TEAM_NAME, formData.teamName.trim());
-    formParams.append(entryIds.TRACK, formData.track.trim());
-    formParams.append(entryIds.LEADER_NAME, formData.leaderName.trim());
-    formParams.append(entryIds.LEADER_EMAIL, formData.email.trim());
-    formParams.append(entryIds.LEADER_PHONE, formData.leaderPhone.trim());
-    formParams.append(entryIds.INSTITUTION, formData.institution.trim());
-    formParams.append(entryIds.MEMBER_2, formData.member2.trim());
-    formParams.append(entryIds.MEMBER_3, formData.member3.trim());
-    
-    if (formData.member4.trim()) {
-      formParams.append(entryIds.MEMBER_4, formData.member4.trim());
-    }
-
-    formParams.append(entryIds.PROJECT_TITLE, formData.projectTitle.trim());
-    formParams.append(entryIds.ABSTRACT, formData.abstract.trim());
-
-    // Technologies mapping or custom string handling
-    const rawTech = formData.technologies.trim();
-    const defaultTechOption = 'Microcontrollers (Arduino, ESP32, Raspberry Pi)';
-    const techPayload = rawTech.length > 0 ? rawTech : defaultTechOption;
-    formParams.append(entryIds.TECHNOLOGIES, techPayload);
-
-    // Prototype status mapping to exact Google Form option string
-    const mappedStatus = GOOGLE_FORM_CONFIG.PROTOTYPE_STATUS_MAPPING[formData.prototypeStatus] || formData.prototypeStatus;
-    formParams.append(entryIds.PROTOTYPE_STATUS, mappedStatus);
-
-    // Confirmation checkbox required by Google Form
-    formParams.append(entryIds.CONFIRMATION, GOOGLE_FORM_CONFIG.CONFIRMATION_TEXT);
-
+    // Trigger celebratory confetti burst
     try {
-      // Execute POST request to Google Form formResponse endpoint
-      await fetch(GOOGLE_FORM_CONFIG.SUBMIT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formParams.toString(),
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#9d4edd', '#c77dff', '#e0aaff', '#ffffff']
       });
-
-      // Calculate total team members count
-      const totalMembers = 3 + (formData.member4.trim() ? 1 : 0);
-      const randomHex = Math.random().toString(36).substring(2, 8).toUpperCase();
-      const generatedRefId = `IOT-2026-${randomHex}`;
-
-      setPassData({
-        refId: generatedRefId,
-        teamName: formData.teamName,
-        track: formData.track,
-        leaderName: formData.leaderName,
-        institution: formData.institution,
-        membersCount: totalMembers,
-        projectTitle: formData.projectTitle,
-        timestamp: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-      });
-
-      setIsSubmitted(true);
-      setSubmissionError(null);
-
-      // Trigger celebratory confetti burst
-      try {
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#9d4edd', '#c77dff', '#e0aaff', '#ffffff']
-        });
-      } catch {
-        // Ignore fallback
-      }
-    } catch (err) {
-      console.error('Google Form submission error:', err);
-      setSubmissionError('REGISTRATION COULD NOT BE SUBMITTED');
-    } finally {
-      setIsSubmitting(false);
+    } catch {
+      // Ignore fallback
     }
   };
 
@@ -212,41 +104,32 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
         </button>
 
         {!isSubmitted ? (
-          /* REGISTRATION FORM */
+          /* REGISTRATION / DIGITAL PASS GENERATOR FORM */
           <div className="space-y-6">
             <div className="space-y-2 pr-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-900/30 border border-purple-500/25 text-purple-300 text-xs font-mono tracking-widest uppercase">
                 <Sparkles className="w-3.5 h-3.5 text-purple-300" />
-                ENTER THE CHALLENGE
+                DIGITAL PASS GENERATOR
               </div>
               <h2 id="modal-title" className="font-heading font-bold text-2xl sm:text-3xl text-white">
-                TEAM <span className="text-gradient-purple">REGISTRATION</span>
+                GENERATE <span className="text-gradient-purple">DIGITAL PASS</span>
               </h2>
               <p className="text-slate-300 text-xs sm:text-sm">
-                Complete your registration details to submit directly to the official Google Form database.
+                Enter basic team details below to generate your IOTHRONE 2026 Digital Entry Pass.
               </p>
             </div>
 
-            {/* Error Banner */}
-            {submissionError && (
-              <div className="p-4 rounded-xl bg-red-950/60 border border-red-500/50 text-red-200 text-xs font-mono space-y-2 animate-fadeIn">
-                <div className="flex items-center gap-2 font-bold text-red-400">
-                  <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
-                  <span>{submissionError}</span>
-                </div>
-                <p className="text-slate-300 text-[11px]">
-                  Please try again or submit your registration using the official form.
-                </p>
-                <button
-                  type="button"
-                  onClick={handleOpenOfficialForm}
-                  className="mt-1 px-3 py-1.5 rounded-lg bg-red-900/50 border border-red-400/40 text-white font-mono text-xs hover:bg-red-800 transition-colors flex items-center gap-1.5"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span>OPEN GOOGLE FORM</span>
-                </button>
+            {/* Registration Fee Information */}
+            <div className="p-3.5 rounded-xl bg-purple-950/40 border border-purple-500/30 font-mono text-xs text-purple-200 space-y-1.5">
+              <div className="font-bold text-purple-300 tracking-wider text-[11px] uppercase">
+                REGISTRATION FEE
               </div>
-            )}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs">
+                <span className="text-slate-200">PCCOE Students — <strong className="text-emerald-400 font-bold">FREE</strong></span>
+                <span className="hidden sm:inline text-purple-500/60">•</span>
+                <span className="text-slate-200">Non-PCCOE Students — <strong className="text-purple-300 font-bold">₹99 / Team</strong></span>
+              </div>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-left">
               {/* ROW 1: Team Name & Competition Track */}
@@ -282,11 +165,11 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
                 </div>
               </div>
 
-              {/* ROW 2: Team Leader Name & Leader Email */}
+              {/* ROW 2: Team Leader Name & Institution */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                    TEAM LEADER NAME <span className="text-purple-400">*</span>
+                    TEAM LEADER <span className="text-purple-400">*</span>
                   </label>
                   <input
                     type="text"
@@ -300,195 +183,66 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
 
                 <div className="space-y-1.5">
                   <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                    LEADER EMAIL <span className="text-purple-400">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="leader@domain.com"
-                    className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
-                  />
-                  {errors.email && <p className="text-xs text-red-400">{errors.email}</p>}
-                </div>
-              </div>
-
-              {/* ROW 3: Leader Contact & Project Title */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                    LEADER CONTACT NUMBER <span className="text-purple-400">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    value={formData.leaderPhone}
-                    onChange={(e) => setFormData({ ...formData, leaderPhone: e.target.value })}
-                    placeholder="Enter 10-digit mobile number"
-                    className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
-                  />
-                  {errors.leaderPhone && <p className="text-xs text-red-400">{errors.leaderPhone}</p>}
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                    PROJECT TITLE <span className="text-purple-400">*</span>
+                    INSTITUTION <span className="text-purple-400">*</span>
                   </label>
                   <input
                     type="text"
-                    value={formData.projectTitle}
-                    onChange={(e) => setFormData({ ...formData, projectTitle: e.target.value })}
-                    placeholder="Enter your project / prototype title"
+                    value={formData.institution}
+                    onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
+                    placeholder="University or College Name"
                     className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
                   />
-                  {errors.projectTitle && <p className="text-xs text-red-400">{errors.projectTitle}</p>}
+                  {errors.institution && <p className="text-xs text-red-400">{errors.institution}</p>}
                 </div>
               </div>
 
-              {/* ROW 4: Institution / Organization */}
+              {/* ROW 3: Project Title */}
               <div className="space-y-1.5">
                 <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                  INSTITUTION / ORGANIZATION <span className="text-purple-400">*</span>
+                  PROJECT TITLE <span className="text-purple-400">*</span>
                 </label>
                 <input
                   type="text"
-                  value={formData.institution}
-                  onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                  placeholder="University or College Name"
+                  value={formData.projectTitle}
+                  onChange={(e) => setFormData({ ...formData, projectTitle: e.target.value })}
+                  placeholder="Enter your project / prototype title"
                   className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
                 />
-                {errors.institution && <p className="text-xs text-red-400">{errors.institution}</p>}
-              </div>
-
-              {/* ROW 5 & 6: Team Members (3-4 members total including Leader) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                    TEAM MEMBER 2 <span className="text-purple-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.member2}
-                    onChange={(e) => setFormData({ ...formData, member2: e.target.value })}
-                    placeholder="Full Name"
-                    className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
-                  />
-                  {errors.member2 && <p className="text-xs text-red-400">{errors.member2}</p>}
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                    TEAM MEMBER 3 <span className="text-purple-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.member3}
-                    onChange={(e) => setFormData({ ...formData, member3: e.target.value })}
-                    placeholder="Full Name"
-                    className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
-                  />
-                  {errors.member3 && <p className="text-xs text-red-400">{errors.member3}</p>}
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                  TEAM MEMBER 4 <span className="text-slate-500">(OPTIONAL)</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.member4}
-                  onChange={(e) => setFormData({ ...formData, member4: e.target.value })}
-                  placeholder="Full Name (Optional)"
-                  className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
-                />
-                <span className="block text-[11px] font-mono text-purple-300/60">
-                  Note: Teams consist of 3–4 members total (Leader + Member 2 + Member 3 + optional Member 4).
-                </span>
-              </div>
-
-              {/* ROW 7: Project Abstract Brief */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                  PROJECT ABSTRACT BRIEF <span className="text-purple-400">*</span>
-                </label>
-                <textarea
-                  rows={3}
-                  value={formData.abstract}
-                  onChange={(e) => setFormData({ ...formData, abstract: e.target.value })}
-                  placeholder="Briefly describe your IoT prototype, the problem it addresses, and your proposed solution..."
-                  className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 resize-none"
-                />
-                {errors.abstract && <p className="text-xs text-red-400">{errors.abstract}</p>}
-              </div>
-
-              {/* ROW 8: Technologies / Hardware / Software Used */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                  TECHNOLOGIES, SENSORS, HARDWARE & SOFTWARE USED
-                </label>
-                <textarea
-                  rows={2}
-                  value={formData.technologies}
-                  onChange={(e) => setFormData({ ...formData, technologies: e.target.value })}
-                  placeholder="e.g. ESP32, Arduino, sensors, React, Node.js, MQTT..."
-                  className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 resize-none"
-                />
-              </div>
-
-              {/* ROW 9: Prototype Status & Project Demo Link */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                    PROTOTYPE STATUS <span className="text-purple-400">*</span>
-                  </label>
-                  <select
-                    value={formData.prototypeStatus}
-                    onChange={(e) => setFormData({ ...formData, prototypeStatus: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-[#160a2a] border border-purple-500/30 text-white text-sm focus:outline-none focus:border-purple-400"
-                  >
-                    <option value="Idea / Concept">Idea / Concept</option>
-                    <option value="Prototype in Development">Prototype in Development</option>
-                    <option value="Working Prototype">Working Prototype</option>
-                    <option value="Fully Demonstrable Prototype">Fully Demonstrable Prototype</option>
-                  </select>
-                  {errors.prototypeStatus && <p className="text-xs text-red-400">{errors.prototypeStatus}</p>}
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-mono text-purple-300 tracking-wider">
-                    PROJECT / GITHUB / DEMO LINK
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.projectLink}
-                    onChange={(e) => setFormData({ ...formData, projectLink: e.target.value })}
-                    placeholder="https://github.com/..."
-                    className="w-full px-4 py-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400"
-                  />
-                </div>
+                {errors.projectTitle && <p className="text-xs text-red-400">{errors.projectTitle}</p>}
               </div>
 
               {/* Submit Buttons */}
               <div className="pt-4 space-y-3">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 via-fuchsia-500 to-indigo-600 text-white font-heading font-bold text-sm tracking-widest shadow-[0_0_25px_rgba(157,78,221,0.5)] hover:shadow-[0_0_40px_rgba(199,125,255,0.8)] transition-all disabled:opacity-50"
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 via-fuchsia-500 to-indigo-600 text-white font-heading font-bold text-sm tracking-widest shadow-[0_0_25px_rgba(157,78,221,0.5)] hover:shadow-[0_0_40px_rgba(199,125,255,0.8)] transition-all"
                 >
-                  {isSubmitting ? 'INITIALIZING...' : 'INITIALIZE DIGITAL PASS'}
+                  INITIALIZE DIGITAL PASS
                 </button>
 
-                {/* Secondary Option */}
-                <div className="flex items-center justify-center gap-2 pt-2 text-xs font-mono text-slate-400">
-                  <span>Prefer the official form?</span>
-                  <button
-                    type="button"
-                    onClick={handleOpenOfficialForm}
+                {/* Secondary Options */}
+                <div className="flex flex-wrap items-center justify-center gap-4 pt-2 text-xs font-mono text-slate-400">
+                  <a
+                    href="/IOTHRONE_Rulebook_2026.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-purple-300 hover:text-white font-semibold underline flex items-center gap-1"
                   >
-                    <span>OPEN GOOGLE FORM</span>
+                    <FileText className="w-3.5 h-3.5 text-purple-400" />
+                    <span>VIEW RULEBOOK</span>
                     <ExternalLink className="w-3 h-3 text-purple-400" />
-                  </button>
+                  </a>
+                  <span className="text-purple-500/60 hidden sm:inline">•</span>
+                  <div className="flex items-center gap-1">
+                    <span>Prefer official form?</span>
+                    <button
+                      type="button"
+                      onClick={handleOpenOfficialForm}
+                      className="text-purple-300 hover:text-white font-semibold underline flex items-center gap-1"
+                    >
+                      <span>OPEN GOOGLE FORM ↗</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
@@ -501,13 +255,10 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
                 <CheckCircle2 className="w-8 h-8 text-purple-300" />
               </div>
               <h3 className="font-heading font-bold text-2xl text-white">
-                REGISTRATION INITIALIZED
+                DIGITAL PASS INITIALIZED
               </h3>
-              <p className="text-xs font-mono text-purple-300">
-                REFERENCE: {passData?.refId}
-              </p>
               <p className="text-xs text-slate-300">
-                Registration details submitted successfully to Google Form response database.
+                Your Digital Entry Pass has been generated.
               </p>
             </div>
 
@@ -531,7 +282,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
                 </div>
               </div>
 
-              {/* Pass Fields Grid */}
+              {/* Pass Fields Grid (EXACTLY 5 FIELDS - NO REFERENCE NUMBER) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
                 <div>
                   <span className="text-purple-300/70 block">TEAM:</span>
@@ -549,13 +300,9 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
                   <span className="text-purple-300/70 block">INSTITUTION:</span>
                   <span className="font-heading font-bold text-sm text-white">{passData?.institution}</span>
                 </div>
-                <div>
+                <div className="sm:col-span-2">
                   <span className="text-purple-300/70 block">PROJECT TITLE:</span>
                   <span className="font-heading font-bold text-sm text-white">{passData?.projectTitle}</span>
-                </div>
-                <div>
-                  <span className="text-purple-300/70 block">REFERENCE:</span>
-                  <span className="font-heading font-bold text-sm text-white">{passData?.refId}</span>
                 </div>
               </div>
 
@@ -566,22 +313,28 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
               </div>
             </div>
 
-            {/* PPT File Upload Notice & Complete PPT Submission Button */}
-            <div className="p-4 rounded-xl bg-purple-950/40 border border-purple-500/30 text-left space-y-2">
-              <div className="flex items-center gap-2 text-xs font-mono font-semibold text-purple-300">
-                <FileText className="w-4 h-4 text-purple-400 shrink-0" />
-                <span>COMPLETE PPT / PRESENTATION SUBMISSION</span>
+            {/* Highly Visible Google Form Callout Card */}
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-950/90 via-[#1d093a]/90 to-[#0d051a]/95 border-2 border-purple-400 shadow-[0_0_35px_rgba(157,78,221,0.5)] text-left space-y-4 relative overflow-hidden">
+              <div className="flex items-center gap-2 text-amber-400 font-mono text-xs font-bold tracking-wider uppercase">
+                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                <span>IMPORTANT — COMPLETE YOUR REGISTRATION</span>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Registration details submitted successfully. If you have not uploaded your presentation file yet, complete your file upload via the official form.
-              </p>
+              
+              <div className="space-y-1.5 text-xs text-slate-200 leading-relaxed">
+                <p className="font-semibold text-white">
+                  Your Digital Pass has been generated, but your official registration is NOT complete yet.
+                </p>
+                <p className="text-slate-300">
+                  Please complete the official IOTHRONE 2026 Google Form to submit your full registration details and Round 1 presentation.
+                </p>
+              </div>
+
               <button
                 type="button"
                 onClick={handleOpenOfficialForm}
-                className="mt-1 w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-white font-mono text-xs font-bold tracking-wider transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-purple-600 via-fuchsia-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-heading font-bold text-xs sm:text-sm tracking-widest uppercase shadow-[0_0_25px_rgba(199,125,255,0.6)] transition-all flex items-center justify-center gap-2 transform hover:scale-[1.02]"
               >
-                <ExternalLink className="w-4 h-4" />
-                <span>COMPLETE PPT SUBMISSION</span>
+                <span>COMPLETE OFFICIAL REGISTRATION ↗</span>
               </button>
             </div>
 

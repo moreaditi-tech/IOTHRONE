@@ -11,7 +11,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenRegister }) => {
     <section className="relative py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden flex flex-col items-center text-center">
       {/* Background Energy Core Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-40 z-0">
-        <PowerStone3D size="w-[500px] h-[500px] sm:w-[700px] sm:h-[700px]" />
+        <PowerStone3D size="w-[500px] h-[500px] sm:w-[700px] sm:h-[700px]" videoSrc="/Images/Last.mp4" />
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto space-y-8">

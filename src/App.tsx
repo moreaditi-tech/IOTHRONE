@@ -6,6 +6,7 @@ import { About } from './sections/About';
 import { Challenge } from './sections/Challenge';
 import { Timeline } from './sections/Timeline';
 import { CompetitionFlow } from './sections/CompetitionFlow';
+import { PrizeDistribution } from './sections/PrizeDistribution';
 import { Rules } from './sections/Rules';
 import { FAQ } from './sections/FAQ';
 import { FinalCTA } from './sections/FinalCTA';
@@ -33,6 +34,7 @@ export function App() {
         <Challenge />
         <Timeline />
         <CompetitionFlow />
+        <PrizeDistribution />
         <Rules />
         <FAQ />
         <FinalCTA onOpenRegister={handleOpenRegister} />

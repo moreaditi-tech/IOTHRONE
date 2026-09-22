@@ -3,7 +3,7 @@ import { CHALLENGE_STAGES } from '../data/competitionData';
 import { Sparkles, Wrench, Share2 } from 'lucide-react';
 
 export const Challenge: React.FC = () => {
-  const [activeStage, setActiveStage] = useState('build');
+  const [activeStage, setActiveStage] = useState('prototype');
 
   const getIcon = (iconName: string) => {
     switch (iconName) {
@@ -46,10 +46,11 @@ export const Challenge: React.FC = () => {
             <div
               key={stage.id}
               onClick={() => setActiveStage(stage.id)}
-              className={`relative z-10 cursor-pointer rounded-2xl p-8 transition-all duration-500 flex flex-col justify-between ${
+              onMouseEnter={() => setActiveStage(stage.id)}
+              className={`relative z-10 cursor-pointer rounded-2xl p-8 transition-all duration-300 flex flex-col justify-between ${
                 isSelected
-                  ? 'bg-purple-950/70 border-2 border-purple-400 shadow-[0_0_35px_rgba(157,78,221,0.35)] scale-105'
-                  : 'glass-panel hover:bg-purple-900/30 border-purple-500/20'
+                  ? 'bg-purple-900/80 border-2 border-purple-400 shadow-[0_0_25px_rgba(199,125,255,0.4)] scale-105'
+                  : 'glass-panel glass-panel-hover border-purple-500/20'
               }`}
             >
               {/* Header Badge */}

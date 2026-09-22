@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RULES_DATA } from '../data/competitionData';
-import { ChevronDown, ShieldCheck, AlertCircle } from 'lucide-react';
+import { ChevronDown, ShieldCheck, CheckCircle2, FileText, ExternalLink } from 'lucide-react';
 
 export const Rules: React.FC = () => {
   const [openId, setOpenId] = useState<string>('general');
@@ -13,8 +13,20 @@ export const Rules: React.FC = () => {
           THE CODE OF THE <span className="text-gradient-purple">CORE</span>
         </h2>
         <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          Official competition regulations, prototype standards, hardware compliance, and integrity rules.
+          Official competition regulations, prototype standards, hardware compliance, and evaluation guidelines.
         </p>
+        <div className="pt-2 flex justify-center">
+          <a
+            href="/IOTHRONE_Rulebook_2026.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-purple-900/40 border border-purple-500/40 hover:border-purple-400 text-purple-200 hover:text-white font-mono text-xs font-bold tracking-wider uppercase shadow-[0_0_20px_rgba(157,78,221,0.2)] hover:shadow-[0_0_30px_rgba(199,125,255,0.4)] transition-all transform hover:scale-105"
+          >
+            <FileText className="w-4 h-4 text-purple-300" />
+            <span>VIEW RULEBOOK</span>
+            <ExternalLink className="w-3.5 h-3.5 text-purple-400" />
+          </a>
+        </div>
       </div>
 
       {/* Accordions Stack */}
@@ -26,8 +38,8 @@ export const Rules: React.FC = () => {
               key={cat.id}
               className={`rounded-2xl transition-all duration-300 overflow-hidden ${
                 isOpen
-                  ? 'bg-purple-950/70 border-2 border-purple-400 shadow-[0_0_25px_rgba(157,78,221,0.3)]'
-                  : 'glass-panel hover:bg-purple-900/30 border-purple-500/20'
+                  ? 'bg-purple-900/80 border-2 border-purple-400 shadow-[0_0_25px_rgba(199,125,255,0.4)]'
+                  : 'glass-panel glass-panel-hover border-purple-500/20'
               }`}
             >
               <button
@@ -50,28 +62,24 @@ export const Rules: React.FC = () => {
 
               {isOpen && (
                 <div className="px-6 pb-6 pt-2 border-t border-purple-900/40 space-y-3 animate-fadeIn">
-                  {cat.rules.map((rule, rIdx) => {
-                    const isPlaceholder = rule.includes('[ADD OFFICIAL');
-                    return (
-                      <div
-                        key={rIdx}
-                        className={`flex items-start gap-3 p-3.5 rounded-xl ${
-                          isPlaceholder
-                            ? 'bg-purple-900/40 border border-dashed border-purple-400/50 text-purple-200'
-                            : 'bg-purple-950/30 text-slate-300'
-                        }`}
-                      >
-                        {isPlaceholder ? (
-                          <AlertCircle className="w-4 h-4 text-purple-400 mt-0.5 shrink-0" />
-                        ) : (
-                          <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0" />
-                        )}
-                        <span className={`text-sm leading-relaxed ${isPlaceholder ? 'font-mono text-xs font-semibold tracking-wider text-purple-300' : ''}`}>
-                          {rule}
-                        </span>
+                  {cat.rules.map((rule) => (
+                    <div
+                      key={rule.num}
+                      className="flex items-start gap-3.5 p-4 rounded-xl bg-purple-950/40 border border-purple-500/20 hover:border-purple-500/40 transition-colors"
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                          <h4 className="font-mono text-xs font-bold text-purple-200 uppercase tracking-wider">
+                            {rule.title}
+                          </h4>
+                        </div>
+                        <p className="text-sm text-slate-300 leading-relaxed">
+                          {rule.description}
+                        </p>
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
