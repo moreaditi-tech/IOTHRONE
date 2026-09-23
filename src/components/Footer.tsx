@@ -29,18 +29,20 @@ export const Footer: React.FC = () => {
           {/* Brand Info */}
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-900 flex items-center justify-center border border-purple-400/40">
-                <span className="font-heading font-black text-white text-xs">IO</span>
-              </div>
+              <img
+                src="/Images/Logo_.jpeg"
+                alt="IOTHRONE Logo"
+                className="h-8 w-auto object-contain rounded-lg"
+              />
               <span className="font-heading font-bold text-2xl tracking-widest text-white">
                 IOTHRONE
               </span>
             </div>
             <p className="text-xs font-mono tracking-wider text-purple-300">
-              POWERING THE NEXT GENERATION OF INNOVATORS.
+              PCCOE IOT INNOVATION COMPETITION
             </p>
             <p className="text-slate-400 text-sm max-w-md leading-relaxed">
-              The IoT innovation hackathon and hardware connectivity challenge. Build real-time embedded systems, sensor arrays, and AI edge intelligence.
+              Organized by IIRIS. A hands-on IoT innovation challenge where student teams build, test, and present hardware prototypes.
             </p>
           </div>
 
@@ -90,11 +92,11 @@ export const Footer: React.FC = () => {
                   Tejas Bankar
                 </p>
                 <a
-                  href="tel:850350084"
+                  href="tel:9850350084"
                   className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-purple-300 transition-colors font-mono font-semibold"
                 >
                   <Phone className="w-3.5 h-3.5 text-purple-400 shrink-0" />
-                  <span>8503 50084</span>
+                  <span>9850350084</span>
                 </a>
               </div>
             </div>

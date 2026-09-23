@@ -7,12 +7,12 @@ export const CompetitionFlow: React.FC = () => {
   return (
     <section className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white">
-          FROM IDEA TO <span className="text-gradient-purple">IMPACT</span>
+      <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl tracking-tight text-white">
+          HOW IT <span className="text-gradient-purple">WORKS</span>
         </h2>
         <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          Follow the 6-stage technological evolution pipeline from initial registration to live real-time system deployment.
+          A step-by-step roadmap from initial team registration to the final offline hardware demo.
         </p>
       </div>
 

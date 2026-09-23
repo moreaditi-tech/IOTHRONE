@@ -1,17 +1,17 @@
 import React from 'react';
 import { COMPETITION_TIMELINE } from '../data/competitionData';
-import { Clock, MapPin, Users, CheckCircle2, Zap } from 'lucide-react';
+import { Clock, MapPin, Users, CheckCircle2 } from 'lucide-react';
 
 export const Timeline: React.FC = () => {
   return (
     <section id="timeline" className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-        <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white">
-          THE POWER <span className="text-gradient-purple">TRIALS</span>
+      <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl tracking-tight text-white">
+          COMPETITION <span className="text-gradient-purple">TIMELINE</span>
         </h2>
         <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          Three stages. One challenge. Unleash the potential.
+          Three rounds to test your idea, prototype, and real-time implementation.
         </p>
       </div>
 
@@ -39,8 +39,7 @@ export const Timeline: React.FC = () => {
                   <div className="glass-panel glass-panel-hover rounded-2xl p-6 sm:p-8 space-y-4 relative overflow-hidden">
                     {/* Top Status Header */}
                     <div className="flex items-center justify-between border-b border-purple-900/40 pb-3">
-                      <span className="font-mono text-xs text-purple-400 font-semibold tracking-widest uppercase flex items-center gap-1.5">
-                        <Zap className="w-3.5 h-3.5 text-purple-300" />
+                      <span className="font-mono text-xs text-purple-400 font-semibold tracking-widest uppercase flex items-center">
                         {item.badge}
                       </span>
                       <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-purple-900/40 border border-purple-500/30 text-purple-200">

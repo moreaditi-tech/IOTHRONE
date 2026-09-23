@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sparkles, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight } from 'lucide-react';
 
 interface NavbarProps {
   onOpenRegister: () => void;
@@ -79,10 +79,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
               onClick={(e) => handleNavClick(e, '#home')}
               className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-purple-500 rounded-lg p-1"
             >
-              <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-900 flex items-center justify-center border border-purple-400/40 shadow-[0_0_15px_rgba(157,78,221,0.5)] group-hover:shadow-[0_0_25px_rgba(224,170,255,0.8)] transition-all duration-300">
-                <span className="font-heading font-black text-white text-base tracking-tighter">IO</span>
-                <div className="absolute inset-0 rounded-lg bg-purple-400/20 animate-ping opacity-30" />
-              </div>
+              <img
+                src="/Images/Logo_.jpeg"
+                alt="IOTHRONE Logo"
+                className="h-9 w-auto object-contain rounded-lg shadow-[0_0_15px_rgba(157,78,221,0.5)] group-hover:shadow-[0_0_25px_rgba(224,170,255,0.8)] transition-all duration-300"
+              />
               <div className="flex flex-col">
                 <span className="font-heading font-bold text-xl md:text-2xl tracking-widest text-gradient-purple">
                   IOTHRONE
@@ -132,8 +133,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRegister }) => {
               className="relative group overflow-hidden rounded-full p-[1px] font-semibold text-xs transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-purple-600 via-fuchsia-500 to-indigo-600 rounded-full animate-spin-slow opacity-80 group-hover:opacity-100" />
-              <span className="relative block px-4 py-2 rounded-full bg-[#0d051a] text-purple-200 group-hover:text-white group-hover:bg-purple-950/80 transition-all duration-300 flex items-center gap-1.5 font-heading tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-purple-400 group-hover:rotate-12 transition-transform" />
+              <span className="relative block px-4 py-2 rounded-full bg-[#0d051a] text-purple-200 group-hover:text-white group-hover:bg-purple-950/80 transition-all duration-300 flex items-center justify-center font-heading tracking-wider">
                 ENTER CHALLENGE
               </span>
             </button>

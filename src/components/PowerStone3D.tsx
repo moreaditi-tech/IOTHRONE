@@ -40,10 +40,10 @@ export const PowerStone3D: React.FC<PowerStoneProps> = ({
               loop
               playsInline
               aria-hidden="true"
-              className="w-full h-full object-cover rounded-full pointer-events-none filter drop-shadow-[0_0_40px_rgba(157,78,221,0.6)]"
+              className="w-full h-full object-cover rounded-full pointer-events-none filter drop-shadow-[0_0_50px_rgba(157,78,221,0.7)]"
               style={{
-                WebkitMaskImage: 'radial-gradient(circle at center, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.6) 55%, rgba(0,0,0,0) 68%)',
-                maskImage: 'radial-gradient(circle at center, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.6) 55%, rgba(0,0,0,0) 68%)'
+                WebkitMaskImage: 'radial-gradient(circle at center, black 0%, black 40%, rgba(0,0,0,0.6) 60%, transparent 72%)',
+                maskImage: 'radial-gradient(circle at center, black 0%, black 40%, rgba(0,0,0,0.6) 60%, transparent 72%)'
               }}
             >
               <source src={videoSrc} type="video/mp4" />

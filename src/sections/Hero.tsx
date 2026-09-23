@@ -1,6 +1,6 @@
 import React from 'react';
 import { PowerStone3D } from '../components/PowerStone3D';
-import { Sparkles, ChevronDown, Rocket, Calendar } from 'lucide-react';
+import { ChevronDown, Calendar } from 'lucide-react';
 
 interface HeroProps {
   onOpenRegister: () => void;
@@ -27,7 +27,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRegister }) => {
         <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
           {/* Eyebrow Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-900/30 border border-purple-500/30 text-purple-300 text-xs font-mono font-medium tracking-widest uppercase shadow-[0_0_15px_rgba(157,78,221,0.2)]">
-            <Sparkles className="w-3.5 h-3.5 text-purple-300 animate-pulse" />
             <span>IOTHRONE 2026</span>
             <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
             <span className="text-purple-400">IOT COMPETITION</span>
@@ -53,7 +52,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRegister }) => {
 
           {/* Short Narrative */}
           <p className="text-slate-300 text-sm sm:text-base max-w-xl leading-relaxed">
-            Step into the next-generation technological universe. Design intelligent hardware prototypes, establish edge computing pipelines, and battle in real-time integration trials.
+            Build an IoT solution, test it with real hardware, and take it through three rounds of evaluation.
           </p>
 
           {/* CTA Buttons */}
@@ -65,7 +64,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRegister }) => {
             >
               <span className="absolute inset-0 bg-gradient-to-r from-purple-600 via-fuchsia-400 to-indigo-600 rounded-xl group-hover:scale-105 transition-transform" />
               <span className="relative flex items-center justify-center gap-2.5 px-7 py-4 rounded-[10px] bg-[#0d051a] text-white group-hover:bg-opacity-80 transition-all duration-300">
-                <Rocket className="w-4 h-4 text-purple-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 ENTER THE CHALLENGE
               </span>
             </button>
@@ -85,15 +83,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRegister }) => {
           <div className="grid grid-cols-3 gap-6 pt-6 border-t border-purple-900/30 w-full max-w-lg">
             <div>
               <span className="block font-heading font-bold text-2xl text-white">03</span>
-              <span className="block font-mono text-[10px] text-purple-300/70 tracking-wider">INTENSE STAGES</span>
+              <span className="block font-mono text-[10px] text-purple-300/70 tracking-wider">COMPETITION STAGES</span>
             </div>
             <div>
               <span className="block font-heading font-bold text-2xl text-white">100%</span>
-              <span className="block font-mono text-[10px] text-purple-300/70 tracking-wider">LIVE INTEGRATION</span>
+              <span className="block font-mono text-[10px] text-purple-300/70 tracking-wider">HARDWARE DEMO</span>
             </div>
             <div>
               <span className="block font-heading font-bold text-2xl text-white">2026</span>
-              <span className="block font-mono text-[10px] text-purple-300/70 tracking-wider">COLLEGE EDITION</span>
+              <span className="block font-mono text-[10px] text-purple-300/70 tracking-wider">OFFICIAL EDITION</span>
             </div>
           </div>
         </div>

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { CHALLENGE_STAGES } from '../data/competitionData';
-import { Sparkles, Wrench, Share2 } from 'lucide-react';
+import { Lightbulb, Wrench, Share2 } from 'lucide-react';
 
 export const Challenge: React.FC = () => {
   const [activeStage, setActiveStage] = useState('prototype');
 
   const getIcon = (iconName: string) => {
     switch (iconName) {
-      case 'Sparkles':
-        return <Sparkles className="w-5 h-5 text-purple-300" />;
+      case 'Lightbulb':
+        return <Lightbulb className="w-5 h-5 text-purple-300" />;
       case 'Wrench':
         return <Wrench className="w-5 h-5 text-purple-300" />;
       case 'Share2':
         return <Share2 className="w-5 h-5 text-purple-300" />;
       default:
-        return <Sparkles className="w-5 h-5 text-purple-300" />;
+        return <Lightbulb className="w-5 h-5 text-purple-300" />;
     }
   };
 
@@ -24,12 +24,12 @@ export const Challenge: React.FC = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white">
+      <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl tracking-tight text-white">
           THE <span className="text-gradient-purple">CHALLENGE</span>
         </h2>
         <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          Participants must design, build, and demonstrate an IoT-based prototype capable of real-world intelligent data telemetry and live system adaptation.
+          Teams design, build, and test a working IoT prototype across presentation, prototype demo, and live implementation rounds.
         </p>
       </div>
 
@@ -74,11 +74,11 @@ export const Challenge: React.FC = () => {
                 <div className="flex items-center gap-1.5">
                   <span
                     className={`w-2.5 h-2.5 rounded-full ${
-                      isSelected ? 'bg-purple-400 animate-ping' : 'bg-purple-800'
+                      isSelected ? 'bg-purple-400' : 'bg-purple-800'
                     }`}
                   />
                   <span className="font-mono text-[10px] text-purple-300/80 uppercase">
-                    {isSelected ? 'ACTIVE NODE' : `NODE 0${idx + 1}`}
+                    {isSelected ? 'CURRENT STAGE' : `STAGE 0${idx + 1}`}
                   </span>
                 </div>
               </div>

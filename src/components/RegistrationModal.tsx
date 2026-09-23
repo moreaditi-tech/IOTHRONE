@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, CheckCircle2, ShieldAlert, QrCode, Download, ExternalLink, FileText, AlertTriangle } from 'lucide-react';
+import { X, CheckCircle2, ShieldAlert, QrCode, Download, ExternalLink, FileText, AlertTriangle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { GOOGLE_FORM_CONFIG } from '../config/googleFormConfig';
 
@@ -107,8 +107,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
           /* REGISTRATION / DIGITAL PASS GENERATOR FORM */
           <div className="space-y-6">
             <div className="space-y-2 pr-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-900/30 border border-purple-500/25 text-purple-300 text-xs font-mono tracking-widest uppercase">
-                <Sparkles className="w-3.5 h-3.5 text-purple-300" />
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-purple-900/30 border border-purple-500/25 text-purple-300 text-xs font-mono tracking-widest uppercase">
                 DIGITAL PASS GENERATOR
               </div>
               <h2 id="modal-title" className="font-heading font-bold text-2xl sm:text-3xl text-white">
@@ -217,13 +216,13 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
                   type="submit"
                   className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 via-fuchsia-500 to-indigo-600 text-white font-heading font-bold text-sm tracking-widest shadow-[0_0_25px_rgba(157,78,221,0.5)] hover:shadow-[0_0_40px_rgba(199,125,255,0.8)] transition-all"
                 >
-                  INITIALIZE DIGITAL PASS
+                  GENERATE DIGITAL PASS
                 </button>
 
                 {/* Secondary Options */}
                 <div className="flex flex-wrap items-center justify-center gap-4 pt-2 text-xs font-mono text-slate-400">
                   <a
-                    href="/IOTHRONE_Rulebook_2026.pdf"
+                    href="/IOTHRONE_Rulebook_2026_New.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-purple-300 hover:text-white font-semibold underline flex items-center gap-1"
@@ -251,11 +250,11 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, on
           /* HOLOGRAPHIC DIGITAL PASS RESULT */
           <div className="space-y-6 text-center">
             <div className="flex flex-col items-center space-y-2">
-              <div className="p-3 rounded-full bg-purple-900/50 border border-purple-400 text-purple-300 animate-bounce">
+              <div className="p-3 rounded-full bg-purple-900/50 border border-purple-400 text-purple-300">
                 <CheckCircle2 className="w-8 h-8 text-purple-300" />
               </div>
               <h3 className="font-heading font-bold text-2xl text-white">
-                DIGITAL PASS INITIALIZED
+                DIGITAL PASS GENERATED
               </h3>
               <p className="text-xs text-slate-300">
                 Your Digital Entry Pass has been generated.

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trophy, Award, Crown, Sparkles, Zap } from 'lucide-react';
+import { Trophy, Award, Crown } from 'lucide-react';
 
 export const PrizeDistribution: React.FC = () => {
   const prizes = [
@@ -35,21 +35,15 @@ export const PrizeDistribution: React.FC = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[140px] pointer-events-none z-0" />
 
       {/* Section Header */}
-      <div className="relative z-10 text-center max-w-3xl mx-auto mb-16 space-y-4">
-        {/* Eyebrow Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-900/30 border border-purple-500/30 text-purple-300 text-xs font-mono font-medium tracking-widest uppercase shadow-[0_0_15px_rgba(157,78,221,0.2)]">
-          <Sparkles className="w-3.5 h-3.5 text-purple-300 animate-pulse" />
-          <span>PRIZE DISTRIBUTION</span>
-        </div>
-
+      <div className="relative z-10 text-center max-w-3xl mx-auto mb-14 space-y-3">
         {/* Main Heading */}
-        <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white">
-          CLAIM THE <span className="text-gradient-purple">THRONE</span>
+        <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl tracking-tight text-white">
+          PRIZES & <span className="text-gradient-purple">REWARDS</span>
         </h2>
 
         {/* Subtitle */}
         <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          The most innovative and technically impressive solutions will rise to the top.
+          Cash prizes awarded to the top-performing teams with working IoT prototypes.
         </p>
       </div>
 
@@ -79,8 +73,7 @@ export const PrizeDistribution: React.FC = () => {
               <div className="space-y-6">
                 {/* Header Badge */}
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs px-3 py-1 rounded-full uppercase tracking-wider font-semibold flex items-center gap-1.5 bg-purple-900/40 border border-purple-500/30 text-purple-200">
-                    <Zap className="w-3 h-3 text-purple-300" />
+                  <span className="font-mono text-xs px-3 py-1 rounded-full uppercase tracking-wider font-semibold flex items-center bg-purple-900/40 border border-purple-500/30 text-purple-200">
                     {prize.place}
                   </span>
                 </div>
@@ -125,8 +118,7 @@ export const PrizeDistribution: React.FC = () => {
 
               {/* Card Footer */}
               <div className="pt-6 text-center">
-                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-purple-300/80 font-medium">
-                  <Sparkles className="w-3 h-3 text-purple-400" />
+                <span className="inline-flex items-center text-xs font-mono text-purple-300/80 font-medium">
                   Official Trophy & Certificate
                 </span>
               </div>

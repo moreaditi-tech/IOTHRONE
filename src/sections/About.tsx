@@ -22,12 +22,12 @@ export const About: React.FC = () => {
       <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/20 to-transparent pointer-events-none" />
 
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white">
-          AWAKEN THE <span className="text-gradient-purple">CORE</span>
+      <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl tracking-tight text-white">
+          WHAT IS <span className="text-gradient-purple">IOTHRONE?</span>
         </h2>
         <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          IOTHRONE is a platform where ideas evolve into intelligent, connected systems.
+          Bring your idea, your hardware, and your team to design, build, and demonstrate real-world IoT systems.
         </p>
       </div>
 

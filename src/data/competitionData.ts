@@ -118,7 +118,7 @@ export const CHALLENGE_STAGES = [
     title: 'CONCEPT',
     subtitle: 'Conceptualize the Solution',
     description: 'Formulate your IoT architectural blueprint, define sensor inputs, and outline system communication protocols for Round 1 PPT evaluation.',
-    icon: 'Sparkles'
+    icon: 'Lightbulb'
   },
   {
     id: 'prototype',

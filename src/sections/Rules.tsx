@@ -8,16 +8,16 @@ export const Rules: React.FC = () => {
   return (
     <section id="rules" className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white">
-          THE CODE OF THE <span className="text-gradient-purple">CORE</span>
+      <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl tracking-tight text-white">
+          RULES & <span className="text-gradient-purple">GUIDELINES</span>
         </h2>
         <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          Official competition regulations, prototype standards, hardware compliance, and evaluation guidelines.
+          Official guidelines, hardware requirements, and team evaluation criteria.
         </p>
         <div className="pt-2 flex justify-center">
           <a
-            href="/IOTHRONE_Rulebook_2026.pdf"
+            href="/IOTHRONE_Rulebook_2026_New.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-purple-900/40 border border-purple-500/40 hover:border-purple-400 text-purple-200 hover:text-white font-mono text-xs font-bold tracking-wider uppercase shadow-[0_0_20px_rgba(157,78,221,0.2)] hover:shadow-[0_0_30px_rgba(199,125,255,0.4)] transition-all transform hover:scale-105"

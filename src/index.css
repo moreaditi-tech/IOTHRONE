@@ -57,10 +57,10 @@
 
 .glass-panel-hover:hover,
 .glass-panel-hover:focus-visible {
-  background: rgba(58, 12, 108, 0.8) !important;
-  border-color: rgba(199, 125, 255, 0.6) !important;
-  box-shadow: 0 0 25px rgba(199, 125, 255, 0.4), inset 0 1px 2px 0 rgba(255, 255, 255, 0.25) !important;
-  transform: translateY(-4px) scale(1.01) !important;
+  background: rgba(36, 12, 68, 0.75) !important;
+  border-color: rgba(199, 125, 255, 0.45) !important;
+  box-shadow: 0 6px 20px rgba(157, 78, 221, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15) !important;
+  transform: translateY(-2px) !important;
 }
 
 .text-gradient-purple {
