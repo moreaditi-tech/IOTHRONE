@@ -82,7 +82,7 @@ export const Footer: React.FC = () => {
                   className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-purple-300 transition-colors font-mono font-semibold"
                 >
                   <Phone className="w-3.5 h-3.5 text-purple-400 shrink-0" />
-                  <span>83299 26111</span>
+                  <span>8329926111</span>
                 </a>
               </div>
 
