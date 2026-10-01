@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Music, Volume2 } from 'lucide-react';
 import { useMusic } from '../context/useMusic';
 
 interface CosmicIntroProps {
@@ -10,7 +9,7 @@ export const CosmicIntro: React.FC<CosmicIntroProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(1);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [videoError, setVideoError] = useState(false);
-  const { isPlaying, startMusicAttempt, togglePlayback } = useMusic();
+  const { startMusicAttempt } = useMusic();
 
   // 1. Attempt background music playback immediately when intro initializes
   useEffect(() => {
@@ -18,11 +17,10 @@ export const CosmicIntro: React.FC<CosmicIntroProps> = ({ onComplete }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 2. 10-second smooth counter from 1% to 100%
+  // 2. 20-second smooth counter from 1% to 100% (200ms * 100 steps = 20,000ms = 20s)
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Total duration ~10,000ms (10 seconds), 100 steps -> 100ms per step
-    const stepDuration = prefersReducedMotion ? 40 : 100;
+    const stepDuration = prefersReducedMotion ? 50 : 200;
 
     const timer = setInterval(() => {
       setProgress((prev) => {
@@ -106,29 +104,10 @@ export const CosmicIntro: React.FC<CosmicIntroProps> = ({ onComplete }) => {
           {/* Thin Glowing Purple Progress Bar */}
           <div className="h-1.5 w-full rounded-full bg-purple-950/80 border border-purple-500/30 overflow-hidden p-[1px]">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-purple-600 via-fuchsia-400 to-indigo-500 shadow-[0_0_15px_rgba(199,125,255,0.9)] transition-all duration-100 ease-linear"
+              className="h-full rounded-full bg-gradient-to-r from-purple-600 via-fuchsia-400 to-indigo-500 shadow-[0_0_15px_rgba(199,125,255,0.9)] transition-all duration-200 ease-linear"
               style={{ width: `${progress}%` }}
             />
           </div>
-        </div>
-
-        {/* AUTOPLAY MUSIC FALLBACK / ENABLE CONTROL */}
-        <div className="pt-3">
-          {isPlaying ? (
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-900/40 border border-purple-500/30 text-purple-300 text-xs font-mono tracking-wider backdrop-blur-md animate-fadeIn">
-              <Volume2 className="w-3.5 h-3.5 text-purple-300 animate-pulse" />
-              <span>BACKGROUND MUSIC ACTIVE</span>
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={() => togglePlayback()}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-900/60 hover:bg-purple-800/90 border border-purple-400/50 text-white text-xs font-mono tracking-wider shadow-[0_0_20px_rgba(157,78,221,0.5)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
-            >
-              <Music className="w-3.5 h-3.5 text-purple-300 animate-bounce" />
-              <span>TAP TO ENABLE MUSIC</span>
-            </button>
-          )}
         </div>
       </div>
     </div>

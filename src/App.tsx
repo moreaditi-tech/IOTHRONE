@@ -35,7 +35,7 @@ function AppContent() {
 
   return (
     <div className="relative min-h-screen bg-[#05020a] text-slate-100 selection:bg-purple-600 selection:text-white antialiased overflow-x-hidden">
-      {/* 10-Second Cinematic Cosmic Video Intro */}
+      {/* 20-Second Cinematic Cosmic Video Intro */}
       {showIntro && <CosmicIntro onComplete={handleIntroComplete} />}
 
       {/* Premium Purple Glitter Cursor Effect for Desktop */}
@@ -63,8 +63,8 @@ function AppContent() {
       {/* Footer */}
       <Footer />
 
-      {/* Floating Background Music Player */}
-      <BackgroundMusic />
+      {/* Floating Background Music Player (Revealed after intro completes) */}
+      {!showIntro && <BackgroundMusic />}
 
       {/* Interactive Registration Modal */}
       <RegistrationModal isOpen={isRegisterModalOpen} onClose={handleCloseRegister} />

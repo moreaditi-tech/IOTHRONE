@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MUSIC_CONFIG, MusicContext } from './musicConfig';
 
-const STORAGE_KEY = 'iothrone_music_enabled';
-
 export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -36,18 +34,39 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     audio.addEventListener('pause', handlePause);
     audio.addEventListener('error', handleError);
 
-    // Attempt playback immediately on page open if not explicitly turned OFF
-    const savedPref = localStorage.getItem(STORAGE_KEY);
-    if (savedPref !== 'false') {
-      audio.play().then(() => {
-        setIsPlaying(true);
-        setAutoplayBlocked(false);
-        localStorage.setItem(STORAGE_KEY, 'true');
-      }).catch(() => {
-        // Autoplay blocked by browser policy
-        setAutoplayBlocked(true);
-        setIsPlaying(false);
-      });
+    // Attempt playback immediately on fresh page load (default ON)
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsPlaying(true);
+          setAutoplayBlocked(false);
+        })
+        .catch(() => {
+          // Autoplay blocked by browser policy
+          setAutoplayBlocked(true);
+          setIsPlaying(false);
+
+          // One-time interaction fallback to start audio on first permitted user interaction
+          const handleFirstInteraction = () => {
+            if (audioRef.current && audioRef.current.paused) {
+              audioRef.current
+                .play()
+                .then(() => {
+                  setIsPlaying(true);
+                  setAutoplayBlocked(false);
+                })
+                .catch(() => {
+                  // Silently ignore
+                });
+            }
+            window.removeEventListener('pointerdown', handleFirstInteraction);
+            window.removeEventListener('keydown', handleFirstInteraction);
+          };
+
+          window.addEventListener('pointerdown', handleFirstInteraction, { once: true });
+          window.addEventListener('keydown', handleFirstInteraction, { once: true });
+        });
     }
 
     return () => {
@@ -61,25 +80,14 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const startMusicAttempt = async (): Promise<boolean> => {
     if (!audioRef.current) return false;
-
-    // Respect stored user preference
-    const savedPref = localStorage.getItem(STORAGE_KEY);
-    if (savedPref === 'false') {
-      setIsPlaying(false);
-      setAutoplayBlocked(false);
-      return false;
-    }
-
     try {
       setHasError(false);
       setErrorMessage(null);
       await audioRef.current.play();
       setIsPlaying(true);
       setAutoplayBlocked(false);
-      localStorage.setItem(STORAGE_KEY, 'true');
       return true;
     } catch {
-      // Browser blocked autoplay or failed
       setAutoplayBlocked(true);
       setIsPlaying(false);
       return false;
@@ -93,7 +101,6 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       audioRef.current.pause();
       setIsPlaying(false);
       setAutoplayBlocked(false);
-      localStorage.setItem(STORAGE_KEY, 'false');
     } else {
       try {
         setHasError(false);
@@ -101,7 +108,6 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         await audioRef.current.play();
         setIsPlaying(true);
         setAutoplayBlocked(false);
-        localStorage.setItem(STORAGE_KEY, 'true');
       } catch (err) {
         console.error('Playback attempt failed:', err);
         setAutoplayBlocked(true);
