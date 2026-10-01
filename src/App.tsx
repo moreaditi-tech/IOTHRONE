@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { MusicProvider } from './context/MusicContext';
-import { GalaxyLoader } from './components/GalaxyLoader';
 import { EnergyBackground } from './components/EnergyBackground';
 import { Navbar } from './components/Navbar';
 import { Hero } from './sections/Hero';
@@ -15,18 +14,18 @@ import { FinalCTA } from './sections/FinalCTA';
 import { Footer } from './components/Footer';
 import { RegistrationModal } from './components/RegistrationModal';
 import { BackgroundMusic } from './components/BackgroundMusic';
+import { PurpleGlitterCursor } from './components/PurpleGlitterCursor';
 
 function AppContent() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   const handleOpenRegister = () => setIsRegisterModalOpen(true);
   const handleCloseRegister = () => setIsRegisterModalOpen(false);
 
   return (
     <div className="relative min-h-screen bg-[#05020a] text-slate-100 selection:bg-purple-600 selection:text-white antialiased overflow-x-hidden">
-      {/* Galaxy Initialization Loader */}
-      {isLoading && <GalaxyLoader onComplete={() => setIsLoading(false)} />}
+      {/* Premium Purple Glitter Cursor Effect for Desktop */}
+      <PurpleGlitterCursor />
 
       {/* Background Energy Cosmic Particles */}
       <EnergyBackground />

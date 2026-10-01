@@ -1,21 +1,17 @@
 import React from 'react';
-import { Volume2, VolumeX, Music, AlertCircle } from 'lucide-react';
+import { Volume2, VolumeX, AlertCircle } from 'lucide-react';
 import { useMusic } from '../context/useMusic';
-import { MUSIC_CONFIG } from '../context/musicConfig';
 
 export const BackgroundMusic: React.FC = () => {
   const { isPlaying, hasError, errorMessage, togglePlayback } = useMusic();
 
-  const accessibleLabel = `Play/Pause ${MUSIC_CONFIG.TITLE} — ${MUSIC_CONFIG.ARTIST}`;
-
   return (
     <div className="fixed bottom-5 left-5 z-40 flex items-center gap-3">
-      {/* Floating Music Toggle Button */}
+      {/* Floating Minimal Music Toggle Button */}
       <button
         onClick={togglePlayback}
-        aria-label={accessibleLabel}
-        title={accessibleLabel}
-        className={`relative group flex items-center justify-center p-3 sm:p-3.5 rounded-full backdrop-blur-xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 ${
+        aria-label="Toggle background music"
+        className={`relative flex items-center justify-center p-3 sm:p-3.5 rounded-full backdrop-blur-xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 cursor-pointer ${
           isPlaying
             ? 'bg-purple-900/80 border-purple-400/80 text-purple-200 shadow-[0_0_25px_rgba(199,125,255,0.6)] hover:shadow-[0_0_35px_rgba(199,125,255,0.9)]'
             : 'bg-[#0d051a]/90 border-purple-500/30 text-purple-400/80 hover:text-white hover:border-purple-400/60 shadow-[0_0_15px_rgba(157,78,221,0.2)]'
@@ -33,31 +29,9 @@ export const BackgroundMusic: React.FC = () => {
             <VolumeX className="w-5 h-5" />
           )}
         </div>
-
-        {/* Floating Tooltip Pill (Shows track details on hover) */}
-        <div className="absolute left-full ml-3 px-3 py-1.5 rounded-xl bg-[#0d051a]/95 border border-purple-500/30 text-xs font-mono text-purple-200 whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200 shadow-lg flex items-center gap-2">
-          <Music className="w-3.5 h-3.5 text-purple-400 shrink-0" />
-          <span>
-            {isPlaying ? 'NOW PLAYING: ' : 'PLAY: '}
-            <strong className="text-white">{MUSIC_CONFIG.TITLE}</strong> — {MUSIC_CONFIG.ARTIST}
-          </span>
-        </div>
       </button>
 
-      {/* Animated Equalizer Waveform Indicator when playing */}
-      {isPlaying && (
-        <div className="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-300 text-[10px] font-mono tracking-wider backdrop-blur-md animate-fadeIn">
-          <span className="w-1 h-3 bg-purple-400 rounded-full animate-[bounce_1s_infinite_100ms]" />
-          <span className="w-1 h-4 bg-fuchsia-400 rounded-full animate-[bounce_1s_infinite_300ms]" />
-          <span className="w-1 h-2 bg-indigo-400 rounded-full animate-[bounce_1s_infinite_200ms]" />
-          <span className="w-1 h-3.5 bg-purple-300 rounded-full animate-[bounce_1s_infinite_400ms]" />
-          <span className="ml-1 text-[9px] uppercase tracking-widest text-purple-200/90 font-semibold">
-            BACKGROUND MUSIC
-          </span>
-        </div>
-      )}
-
-      {/* Error Notice */}
+      {/* Error Notice if audio fails to load */}
       {hasError && (
         <div className="px-3 py-1.5 rounded-xl bg-amber-950/80 border border-amber-500/40 text-amber-200 text-xs font-mono flex items-center gap-2 animate-fadeIn shadow-lg">
           <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />

@@ -36,6 +36,20 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     audio.addEventListener('pause', handlePause);
     audio.addEventListener('error', handleError);
 
+    // Attempt playback immediately on page open if not explicitly turned OFF
+    const savedPref = localStorage.getItem(STORAGE_KEY);
+    if (savedPref !== 'false') {
+      audio.play().then(() => {
+        setIsPlaying(true);
+        setAutoplayBlocked(false);
+        localStorage.setItem(STORAGE_KEY, 'true');
+      }).catch(() => {
+        // Autoplay blocked by browser policy
+        setAutoplayBlocked(true);
+        setIsPlaying(false);
+      });
+    }
+
     return () => {
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
