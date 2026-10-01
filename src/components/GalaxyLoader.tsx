@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Music, Volume2, VolumeX } from 'lucide-react';
+import { Music, Volume2 } from 'lucide-react';
 import { useMusic } from '../context/useMusic';
 import { MUSIC_CONFIG } from '../context/musicConfig';
 
@@ -10,7 +10,7 @@ interface GalaxyLoaderProps {
 export const GalaxyLoader: React.FC<GalaxyLoaderProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const { isPlaying, autoplayBlocked, startMusicAttempt, togglePlayback } = useMusic();
+  const { isPlaying, startMusicAttempt, togglePlayback } = useMusic();
 
   // Attempt music autoplay at the very start of galaxy initialization
   useEffect(() => {
@@ -111,20 +111,15 @@ export const GalaxyLoader: React.FC<GalaxyLoaderProps> = ({ onComplete }) => {
                 MUSIC: <strong className="text-white">{MUSIC_CONFIG.TITLE}</strong>
               </span>
             </div>
-          ) : autoplayBlocked ? (
+          ) : (
             <button
               type="button"
               onClick={() => togglePlayback()}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-900/50 hover:bg-purple-800/80 border border-purple-400/50 text-white text-xs font-mono tracking-wider shadow-[0_0_20px_rgba(157,78,221,0.4)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
             >
               <Music className="w-3.5 h-3.5 text-purple-300 animate-bounce" />
-              <span>ENABLE BACKGROUND MUSIC</span>
+              <span>TAP TO ENABLE MUSIC</span>
             </button>
-          ) : (
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-950/20 border border-purple-500/20 text-purple-400/70 text-[11px] font-mono tracking-wider">
-              <VolumeX className="w-3.5 h-3.5" />
-              <span>AUDIO INITIALIZING</span>
-            </div>
           )}
         </div>
       </div>

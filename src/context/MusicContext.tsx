@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MUSIC_CONFIG, MusicContext } from './musicConfig';
 
+const STORAGE_KEY = 'iothrone_music_enabled';
+
 export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -45,15 +47,25 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const startMusicAttempt = async (): Promise<boolean> => {
     if (!audioRef.current) return false;
+
+    // Respect stored user preference
+    const savedPref = localStorage.getItem(STORAGE_KEY);
+    if (savedPref === 'false') {
+      setIsPlaying(false);
+      setAutoplayBlocked(false);
+      return false;
+    }
+
     try {
       setHasError(false);
       setErrorMessage(null);
       await audioRef.current.play();
       setIsPlaying(true);
       setAutoplayBlocked(false);
+      localStorage.setItem(STORAGE_KEY, 'true');
       return true;
     } catch {
-      // Browser blocked autoplay or failed silently
+      // Browser blocked autoplay or failed
       setAutoplayBlocked(true);
       setIsPlaying(false);
       return false;
@@ -62,10 +74,25 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const togglePlayback = async () => {
     if (!audioRef.current) return;
+
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
+      setAutoplayBlocked(false);
+      localStorage.setItem(STORAGE_KEY, 'false');
     } else {
-      await startMusicAttempt();
+      try {
+        setHasError(false);
+        setErrorMessage(null);
+        await audioRef.current.play();
+        setIsPlaying(true);
+        setAutoplayBlocked(false);
+        localStorage.setItem(STORAGE_KEY, 'true');
+      } catch (err) {
+        console.error('Playback attempt failed:', err);
+        setAutoplayBlocked(true);
+        setIsPlaying(false);
+      }
     }
   };
 
