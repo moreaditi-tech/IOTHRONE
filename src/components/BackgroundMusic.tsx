@@ -1,69 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { Volume2, VolumeX, Music, AlertCircle } from 'lucide-react';
-
-/**
- * Centralized Configuration for Website Background Music
- */
-const MUSIC_CONFIG = {
-  // Audio file path relative to public directory
-  AUDIO_SRC: '/audio/all-the-stars-instrumental.mp3',
-  TITLE: 'All The Stars',
-  ARTIST: 'Kendrick Lamar & SZA (Instrumental)',
-  DEFAULT_VOLUME: 0.35, // 35% moderate volume
-};
+import { useMusic } from '../context/useMusic';
+import { MUSIC_CONFIG } from '../context/musicConfig';
 
 export const BackgroundMusic: React.FC = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    // Initialize single Audio object instance
-    const audio = new Audio(MUSIC_CONFIG.AUDIO_SRC);
-    audio.loop = true;
-    audio.volume = MUSIC_CONFIG.DEFAULT_VOLUME;
-    audioRef.current = audio;
-
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-    const handleError = () => {
-      setHasError(true);
-      setIsPlaying(false);
-      setErrorMessage('Audio file unavailable or failed to load.');
-    };
-
-    audio.addEventListener('play', handlePlay);
-    audio.addEventListener('pause', handlePause);
-    audio.addEventListener('error', handleError);
-
-    return () => {
-      audio.removeEventListener('play', handlePlay);
-      audio.removeEventListener('pause', handlePause);
-      audio.removeEventListener('error', handleError);
-      audio.pause();
-      audioRef.current = null;
-    };
-  }, []);
-
-  const togglePlayback = async () => {
-    if (!audioRef.current) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      setHasError(false);
-      setErrorMessage(null);
-      try {
-        await audioRef.current.play();
-      } catch (err) {
-        console.error('Audio playback failed:', err);
-        setHasError(true);
-        setIsPlaying(false);
-        setErrorMessage('Playback prevented by browser or file missing.');
-      }
-    }
-  };
+  const { isPlaying, hasError, errorMessage, togglePlayback } = useMusic();
 
   const accessibleLabel = `Play/Pause ${MUSIC_CONFIG.TITLE} — ${MUSIC_CONFIG.ARTIST}`;
 
