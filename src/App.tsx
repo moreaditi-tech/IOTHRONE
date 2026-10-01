@@ -12,6 +12,7 @@ import { FAQ } from './sections/FAQ';
 import { FinalCTA } from './sections/FinalCTA';
 import { Footer } from './components/Footer';
 import { RegistrationModal } from './components/RegistrationModal';
+import { BackgroundMusic } from './components/BackgroundMusic';
 
 export function App() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -43,7 +44,10 @@ export function App() {
       {/* Footer */}
       <Footer />
 
-      {/* Interactive Registration Modal & Digital Pass Generator */}
+      {/* Floating Background Music Player */}
+      <BackgroundMusic />
+
+      {/* Interactive Registration Modal */}
       <RegistrationModal isOpen={isRegisterModalOpen} onClose={handleCloseRegister} />
     </div>
   );
