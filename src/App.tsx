@@ -44,8 +44,8 @@ function AppContent() {
       {/* Background Energy Cosmic Particles */}
       <EnergyBackground />
 
-      {/* Sticky Glass Navbar */}
-      <Navbar onOpenRegister={handleOpenRegister} />
+      {/* Sticky Glass Navbar (Hidden during intro initialization) */}
+      {!showIntro && <Navbar onOpenRegister={handleOpenRegister} />}
 
       {/* Main Website Sections */}
       <main className="relative z-10">
