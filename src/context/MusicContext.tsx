@@ -9,21 +9,19 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Create a single Audio instance for the entire website session
+    // Create a single Audio instance for the ENTIRE website session
     const audio = new Audio(MUSIC_CONFIG.AUDIO_SRC);
     audio.loop = true;
     audio.volume = MUSIC_CONFIG.DEFAULT_VOLUME;
+    // Preload the track so it's ready to play immediately
+    audio.preload = 'auto';
     audioRef.current = audio;
 
     const handlePlay = () => {
       setIsPlaying(true);
       setAutoplayBlocked(false);
     };
-
-    const handlePause = () => {
-      setIsPlaying(false);
-    };
-
+    const handlePause = () => setIsPlaying(false);
     const handleError = () => {
       setHasError(true);
       setIsPlaying(false);
@@ -34,40 +32,40 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     audio.addEventListener('pause', handlePause);
     audio.addEventListener('error', handleError);
 
-    // Attempt playback immediately on fresh page load (default ON)
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          setIsPlaying(true);
-          setAutoplayBlocked(false);
-        })
-        .catch(() => {
-          // Autoplay blocked by browser policy
-          setAutoplayBlocked(true);
-          setIsPlaying(false);
+    // ── Attempt playback at 0:00 of page load ──────────────────────────────
+    audio
+      .play()
+      .then(() => {
+        // Autoplay succeeded — music is on from second 0
+        setIsPlaying(true);
+        setAutoplayBlocked(false);
+      })
+      .catch(() => {
+        // Browser requires user interaction before audio can play.
+        // Register a single one-time handler that covers all interaction types.
+        // This fires during the intro if the visitor taps/clicks anywhere.
+        setAutoplayBlocked(true);
+        setIsPlaying(false);
 
-          // One-time interaction fallback to start audio on first permitted user interaction
-          const handleFirstInteraction = () => {
-            if (audioRef.current && audioRef.current.paused) {
-              audioRef.current
-                .play()
-                .then(() => {
-                  setIsPlaying(true);
-                  setAutoplayBlocked(false);
-                })
-                .catch(() => {
-                  // Silently ignore
-                });
-            }
-            window.removeEventListener('pointerdown', handleFirstInteraction);
-            window.removeEventListener('keydown', handleFirstInteraction);
-          };
+        const resume = () => {
+          if (audioRef.current && audioRef.current.paused) {
+            audioRef.current
+              .play()
+              .then(() => {
+                setIsPlaying(true);
+                setAutoplayBlocked(false);
+              })
+              .catch(() => {
+                // Silently ignore second block
+              });
+          }
+        };
 
-          window.addEventListener('pointerdown', handleFirstInteraction, { once: true });
-          window.addEventListener('keydown', handleFirstInteraction, { once: true });
-        });
-    }
+        // Use capture:true so the event is caught even during the intro overlay
+        document.addEventListener('click', resume, { once: true, capture: true });
+        document.addEventListener('touchstart', resume, { once: true, capture: true });
+        document.addEventListener('keydown', resume, { once: true, capture: true });
+      });
 
     return () => {
       audio.removeEventListener('play', handlePlay);
@@ -78,11 +76,10 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, []);
 
+  // Called by CosmicIntro on mount as a belt-and-suspenders fallback
   const startMusicAttempt = async (): Promise<boolean> => {
-    if (!audioRef.current) return false;
+    if (!audioRef.current || !audioRef.current.paused) return !audioRef.current?.paused;
     try {
-      setHasError(false);
-      setErrorMessage(null);
       await audioRef.current.play();
       setIsPlaying(true);
       setAutoplayBlocked(false);
@@ -108,8 +105,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         await audioRef.current.play();
         setIsPlaying(true);
         setAutoplayBlocked(false);
-      } catch (err) {
-        console.error('Playback attempt failed:', err);
+      } catch {
         setAutoplayBlocked(true);
         setIsPlaying(false);
       }
@@ -118,14 +114,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   return (
     <MusicContext.Provider
-      value={{
-        isPlaying,
-        hasError,
-        errorMessage,
-        autoplayBlocked,
-        togglePlayback,
-        startMusicAttempt,
-      }}
+      value={{ isPlaying, hasError, errorMessage, autoplayBlocked, togglePlayback, startMusicAttempt }}
     >
       {children}
     </MusicContext.Provider>

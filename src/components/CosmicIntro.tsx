@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useMusic } from '../context/useMusic';
 
 interface CosmicIntroProps {
   onComplete: () => void;
@@ -9,13 +8,9 @@ export const CosmicIntro: React.FC<CosmicIntroProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(1);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [videoError, setVideoError] = useState(false);
-  const { startMusicAttempt } = useMusic();
 
-  // 1. Attempt background music playback immediately when intro initializes
-  useEffect(() => {
-    startMusicAttempt();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Music is started by MusicProvider at the very first moment (before this component mounts).
+  // No second attempt needed here — that would conflict with the in-flight play() promise.
 
   // 2. 20-second smooth counter from 1% to 100% (200ms * 100 steps = 20,000ms = 20s)
   useEffect(() => {
